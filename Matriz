@@ -1,0 +1,134 @@
+#Paula Natalia Paez Vega
+#Escuela Colombiana de ingeniería Julio Garavito
+import Biblioteca as lc
+def suma(a,b):
+    #Esta función, suma vectores
+    return (a[0]+b[0],a[1]+b[1])
+def inverso_aditivo(a,b):
+    #Esta función, suma vectores
+    return (a[0]-b[0],a[1]-b[1])
+def multiplicacion(a,b):
+    # Esta función, multiplica vectores
+    d = round(a[0]*b[0]-a[1]*b[1])
+    c = round(a[1]*b[0]+b[1]*a[0])
+    return d, c
+def multiplicacion_vectores(c,v):
+    mult = [(0,0) for i in range(len(v))]
+    j = 0
+    while j < len(v):
+        mult[j] = lc.multiplicacion(c, v[j])
+        j = j + 1
+    return mult
+def suma_vectores(c,v):
+    # v = [(0,3),(0,0),(2,8)]
+    # A [[(0,2),(0,pi)], [(-3,2),(0,0)]]
+    #    [(-3, 2),(0, 0)]
+    mult = [(0,0) for i in range(len(v))]
+    j = 0
+    while j < len(v):
+        mult[j] = lc.suma(c[j], v[j])
+        j = j + 1
+    return mult
+def resta_vectores(c,v):
+    # v = [(0,3),(0,0),(2,8)]
+    # A [[(0,2),(0,pi)], [(-3,2),(0,0)]]
+    #    [(-3, 2),(0, 0)]
+    mult = [(0,0) for i in range(len(v))]
+    j = 0
+    while j < len(v):
+        mult[j] = lc.resta(c[j], v[j])
+        j = j + 1
+    return mult
+def transpuesta(n):
+    k = []
+    for i in range(len(n[0])):
+        k.append([])
+        for j in range(len(n)):
+            k[i].append(n[j][i])
+    return k
+def conjugada(c):
+    mult = [(0, 0) for i in range(len(c))]
+    j = 0
+    while j < len(c):
+        mult[j] = ((c[0]))
+        j = j + 1
+    return mult
+def multiplicar_matrices(n,m):
+    if len(n[0]) == len(m):
+        k = []
+        for i in range(len(n)):
+            k.append([])
+            for j in range(len(m[0])):
+                k[i].append(0)
+        for i in range(len(n)):
+            for j in range(len(m[0])):
+                for p in range(len(n[0])):
+                    k[i][j] += n[i][p] * m[p][j]
+        return k
+    else:
+        return None
+
+def producto_interno(c,v):
+    mult = [(0,0) for i in range(len(v))]
+    j = 0
+    while j < len(v):
+        mult[j] = multiplicar_matrices(lc.transpuesta(c[j]), v[j])
+        j = j + 1
+    return mult
+def norma(a):
+    n = (((a[0])**2) + ((a[1])**2))**(1/2)
+    return round(n, 2)
+def distancia(a,b):
+    c = lc.resta(a,b)
+    d = norma(c)
+    return d
+def producten(v,w):
+    filasa = len(v)
+    filasb = len(w)
+    filasres = filasa * filasb
+    res = [(0,0)] * filasres
+    cuenta = 0
+    for i in range(filasa):
+        for j in range(filasb):
+            res[cuenta] = lc.multiplicacion(v[i],w[j])
+            cuenta += 1
+    return res
+"Hermitiana de una matriz"
+def adjunta(v):
+    return transpuesta(conjugada(v))
+def hermitiana(v):
+    adj = adjunta(v)
+    if adj == v:
+        return True
+    return False
+def main():
+    v = [(3,7),(8,9),(4.3, -7.8)]
+    w = [(5,6), (6,8), (0,0)]
+    c = [[1, 2, 3, ],
+         [4, 5, 6, ],
+         [7, 8, 9]]
+    a = [[(3,7),(8,9),(4.3, -7.8)],
+         [(5,6), (6,8), (0,0)],
+         [(3,7),(8,9),(4.3, -7.8)]]
+    j = [[(3, 7), (8, 9), (4.3, -7.8)],
+         [(5, 6), (6, 8), (0, 0)],
+         [(3, 7), (8, 9), (4.3, -7.8)]]
+    b = [[1, 2, 3, ],
+         [4, 5, 6, ],
+         [7, 8, 9]]
+    h = [1,2]
+    p = (4.2,9)
+    g = (3.5,7)
+    print("la multiplicación de vectores es:", multiplicacion_vectores((2,3), v))
+    print("la suma de vectores es:",suma_vectores(v,w))
+    print("la resta de vectores es:",resta_vectores(v,w))
+    print("la transpuesta de la matriz es:",transpuesta(a))
+    print("la conjugada de la matriz es:",conjugada(v))
+    print("Multiplicación de matrices: ", multiplicar_matrices(c,b))
+    print("PIV:", producto_interno(a,j))
+    print("la norma del vector es:", norma(h))
+    print("La distancia es:", distancia(p,g))
+    print("producto", producten(a,j))
+    print("hermitiana:", hermitiana(a))
+    print("adjunta: ", adjunta(a))
+main()
